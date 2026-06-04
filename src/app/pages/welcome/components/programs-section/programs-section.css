@@ -1,0 +1,76 @@
+:host {
+	display: block;
+}
+
+.section {
+	padding: 2.5rem 0;
+}
+
+.section__heading {
+	max-width: 44rem;
+	margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: #b08d2c;
+}
+
+.section__heading h2 {
+	margin: 0;
+	font-size: clamp(2rem, 4vw, 3.3rem);
+	font-weight: 800;
+	line-height: 0.95;
+	letter-spacing: -0.04em;
+}
+
+.cards {
+	display: grid;
+	gap: 1rem;
+}
+
+.cards--two {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.program-card {
+	padding: 1.75rem;
+	border: 1px solid rgb(17 17 17 / 0.08);
+	border-radius: 1.5rem;
+	background: rgba(255, 255, 255, 0.9);
+	box-shadow: 0 24px 64px rgb(17 17 17 / 0.08);
+}
+
+.program-card h3 {
+	display: block;
+	margin: 0 0 0.75rem;
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: #b08d2c;
+}
+
+.program-card p {
+	margin: 0;
+	line-height: 1.75;
+	color: rgb(17 17 17 / 0.8);
+}
+
+@media (max-width: 960px) {
+	.cards--two {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	.section {
+		padding-top: 1.5rem;
+	}
+
+	.program-card {
+		border-radius: 1.25rem;
+	}
+}
