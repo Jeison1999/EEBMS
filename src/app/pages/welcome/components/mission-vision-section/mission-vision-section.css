@@ -30,7 +30,15 @@
 	color: inherit;
 }
 
+.feature-block--dark .feature-block__text {
+	color: rgb(247 244 235 / 0.8);
+}
+
+
 .feature-block--dark .eyebrow {
+	color: #d4af37;
+}
+.feature-block--light .eyebrow {
 	color: #d4af37;
 }
 
