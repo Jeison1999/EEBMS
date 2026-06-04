@@ -1,0 +1,98 @@
+:host {
+	display: block;
+	position: sticky;
+	top: 0;
+	z-index: 20;
+}
+
+.navbar {
+	border-bottom: 0 solid transparent;
+	background: transparent;
+	transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, backdrop-filter 220ms ease, border-radius 220ms ease, color 220ms ease;
+	border-radius: 0; /* por defecto sin curvas */
+}
+
+.navbar--scrolled {
+	border-bottom: 0; /* eliminar borde claro cuando sea negro */
+	background: #111111; /* fondo negro al bajar */
+	box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+	/* aplicar suavemente un blur sólo cuando está scrolleado */
+	backdrop-filter: blur(6px);
+	/* esquinas inferiores redondeadas */
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+.navbar__inner {
+	width: min(1180px, calc(100% - 2rem));
+	min-height: 4.75rem;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+	gap: 1rem;
+}
+
+.navbar__brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
+}
+
+.navbar__logo {
+	display: block;
+	height: 56px;
+	width: auto;
+	object-fit: contain;
+}
+
+.navbar__links {
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 1.35rem;
+}
+
+.navbar__links a {
+	text-decoration: none;
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: #111111; /* por defecto letras oscuras (cuando el navbar está en top) */
+	transition: color 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+/* Cuando el navbar está scrolleado (fondo oscuro), los enlaces pasan a blanco */
+.navbar--scrolled .navbar__links a {
+	color: #ffffff;
+}
+
+.navbar__links a:hover {
+	color: #b08d2c;
+	transform: translateY(-1px);
+}
+
+@media (max-width: 880px) {
+	.navbar__inner {
+		grid-template-columns: 1fr;
+		padding: 0.9rem 0;
+	}
+
+	.navbar__brand {
+		justify-self: center;
+	}
+
+	.navbar__links {
+		gap: 0.85rem 1.1rem;
+	}
+}
+
+@media (max-width: 560px) {
+	.navbar__inner {
+		width: min(100% - 0.75rem, 1180px);
+	}
+
+	.navbar__links {
+		justify-content: flex-start;
+	}
+}

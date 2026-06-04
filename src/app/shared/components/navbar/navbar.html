@@ -1,0 +1,15 @@
+<header class="navbar" [class.navbar--scrolled]="scrolled()">
+	<div class="navbar__inner">
+		<a class="navbar__brand" href="#inicio" aria-label="Ir al inicio">
+			<img class="navbar__logo" [src]="scrolled() ? '/assets/logoBlanco.png' : '/assets/logoNegro.png'" alt="EEBMS logo" />
+		</a>
+
+		<nav class="navbar__links" aria-label="Navegación principal">
+			<a href="#acerca-de-nosotros">Acerca de nosotros</a>
+			<a href="#mision">Misión</a>
+			<a href="#vision">Visión</a>
+			<a href="#programas">Programas</a>
+			<a href="#contacto">Contacto</a>
+		</nav>
+	</div>
+</header>
