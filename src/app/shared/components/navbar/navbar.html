@@ -1,13 +1,39 @@
-<header class="navbar" [class.navbar--scrolled]="scrolled()">
+<header
+	class="navbar"
+	[class.navbar--scrolled]="scrolled()"
+	[class.navbar--menu-open]="menuOpen()"
+>
 	<div class="navbar__inner">
-		<a class="navbar__brand" href="#inicio" aria-label="Ir al inicio">
-			<img class="navbar__logo" [src]="scrolled() ? '/assets/logoBlanco.png' : '/assets/logoNegro.png'" alt="EEBMS logo" />
+		<a class="navbar__brand" href="#inicio" aria-label="Ir al inicio" (click)="closeMenu()">
+			<img
+				class="navbar__logo"
+				[src]="scrolled() || menuOpen() ? '/assets/logoBlanco.png' : '/assets/logoNegro.png'"
+				alt="EEBMS logo"
+			/>
 		</a>
 
-		<nav class="navbar__links" aria-label="Navegación principal">
-			<a href="#inicio">Inicio</a>
-			<a href="#programas">Programas</a>
-			<a href="#noticias">Noticias</a>
+		<button
+			type="button"
+			class="navbar__toggle"
+			[attr.aria-expanded]="menuOpen()"
+			aria-controls="navbar-menu"
+			[attr.aria-label]="menuOpen() ? 'Cerrar menú' : 'Abrir menú'"
+			(click)="toggleMenu()"
+		>
+			<span class="navbar__toggle-line" aria-hidden="true"></span>
+			<span class="navbar__toggle-line" aria-hidden="true"></span>
+			<span class="navbar__toggle-line" aria-hidden="true"></span>
+		</button>
+
+		<nav
+			id="navbar-menu"
+			class="navbar__links"
+			[class.navbar__links--open]="menuOpen()"
+			aria-label="Navegación principal"
+		>
+			<a href="#inicio" (click)="closeMenu()">Inicio</a>
+			<a href="#programas" (click)="closeMenu()">Programas</a>
+			<a href="#noticias" (click)="closeMenu()">Noticias</a>
 		</nav>
 	</div>
 </header>

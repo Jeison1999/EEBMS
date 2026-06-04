@@ -1,6 +1,7 @@
 Coloca aquí los activos de la web (logo y fotos de secciones):
 
-- Logo: public/assets/logo.png   (o logo.svg)
-- Fotos: public/assets/images/mision-1.jpg, public/assets/images/perfil-1.jpg, etc.
+- Logo: `public/assets/logoNegro.png` y `public/assets/logoBlanco.png`
+- Misión: `public/assets/images/mision.jpg`
+- Visión: `public/assets/images/vision.jpg`
 
-La plantilla ya referencia `/assets/logo.png` desde el `navbar` y la portada. Copia el archivo real del logo a `public/assets/logo.png` para que se muestre en la web.
+Si las fotos no existen aún, la sección Misión/Visión muestra un fondo decorativo hasta que agregues las imágenes.

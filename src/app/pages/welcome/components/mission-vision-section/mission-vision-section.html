@@ -1,17 +1,51 @@
-<section class="section section--split" id="mision-vision">
-	<article class="feature-block feature-block--dark" id="mision">
-		<p class="eyebrow">Misión</p>
-		<h2>Capacitar a cada estudiante en el conocimiento de la Palabra de Dios y en el servicio ministerial.</h2>
-		<p class="feature-block__text">
-			Formamos creyentes comprometidos con la fe, la sana doctrina y el crecimiento espiritual, preparando obreros aprobados que usan correctamente la Palabra de verdad.
-		</p>
-	</article>
+<section class="mv-section" id="mision-vision">
+	
 
-	<article class="feature-block feature-block--light" id="vision">
-		<p class="eyebrow">Visión</p>
-		<h2>Ser un centro de formación teológica que impulse el crecimiento espiritual y personal de cada creyente.</h2>
-		<p>
-			Aspiramos a fundamentar a nuestros estudiantes en una doctrina sana, teniendo como eje la Trinidad bíblica: Padre, Hijo y Espíritu Santo.
-		</p>
-	</article>
+	<div class="mv-tabs" role="tablist" aria-label="Misión y visión">
+		@for (panel of panels; track panel.id) {
+			<button
+				type="button"
+				class="mv-tabs__btn"
+				role="tab"
+				[id]="'tab-' + panel.id"
+				[attr.aria-selected]="isActive(panel.id)"
+				[attr.aria-controls]="'panel-' + panel.id"
+				[class.mv-tabs__btn--active]="isActive(panel.id)"
+				(click)="setTab(panel.id)"
+			>
+				{{ panel.label }}
+			</button>
+		}
+	</div>
+
+	@for (panel of panels; track panel.id) {
+		<article
+			class="mv-panel"
+			role="tabpanel"
+			[id]="'panel-' + panel.id"
+			[attr.aria-labelledby]="'tab-' + panel.id"
+			[class.mv-panel--active]="isActive(panel.id)"
+			[attr.hidden]="!isActive(panel.id) ? true : null"
+		>
+			<div class="mv-panel__media" [class.mv-panel__media--vision]="panel.id === 'vision'">
+				<img
+					class="mv-panel__image"
+					[src]="panel.imageSrc"
+					[alt]="panel.imageAlt"
+					loading="lazy"
+					(error)="onImageError($event)"
+				/>
+				<div class="mv-panel__media-fallback" aria-hidden="true"></div>
+			</div>
+
+			<div class="mv-panel__copy" [class.mv-panel__copy--vision]="panel.id === 'vision'">
+				<div class="mv-panel__copy-card">
+					<span class="mv-panel__badge">{{ panel.label }}</span>
+					<h3 class="mv-panel__title">{{ panel.title }}</h3>
+					<div class="mv-panel__divider" aria-hidden="true"></div>
+					<p class="mv-panel__text">{{ panel.body }}</p>
+				</div>
+			</div>
+		</article>
+	}
 </section>
