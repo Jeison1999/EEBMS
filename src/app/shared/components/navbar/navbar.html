@@ -4,7 +4,7 @@
 	[class.navbar--menu-open]="menuOpen()"
 >
 	<div class="navbar__inner">
-		<a class="navbar__brand" href="#inicio" aria-label="Ir al inicio" (click)="closeMenu()">
+		<a class="navbar__brand" routerLink="/" aria-label="Ir al inicio" (click)="closeMenu()">
 			<img
 				class="navbar__logo"
 				[src]="scrolled() || menuOpen() ? 'assets/logoBlanco.png' : 'assets/logoNegro.png'"
@@ -31,9 +31,9 @@
 			[class.navbar__links--open]="menuOpen()"
 			aria-label="Navegación principal"
 		>
-			<a href="#inicio" (click)="closeMenu()">Inicio</a>
-			<a href="#programas" (click)="closeMenu()">Programas</a>
-			<a href="#noticias" (click)="closeMenu()">Noticias</a>
+			<a routerLink="/" (click)="closeMenu()">Inicio</a>
+			<a routerLink="/programas" (click)="closeMenu()">Programas</a>
+			<a routerLink="/noticias" (click)="closeMenu()">Noticias</a>
 		</nav>
 	</div>
 </header>
