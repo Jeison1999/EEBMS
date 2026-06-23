@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { Welcome } from './pages/welcome/welcome';
-import { News } from './pages/news/news';
-import { Programs } from './pages/programs/programs';
 
 
 export const routes: Routes = [
@@ -10,12 +7,16 @@ export const routes: Routes = [
 		loadComponent: () => import('./pages/welcome/welcome').then(m => m.Welcome)
 	},
 	{
+		path: 'acerca-de-nosotros',
+		loadComponent: () => import('./pages/about-us/about-us').then(m => m.AboutUs)
+	},
+	{
 		path: 'programas',
-		component: Programs
+		loadComponent: () => import('./pages/programs/programs').then(m => m.Programs)
 	},
 	{
 		path: 'noticias',
-		component: News
+		loadComponent: () => import('./pages/news/news').then(m => m.News)
 	},
 	{
 		path: '**',

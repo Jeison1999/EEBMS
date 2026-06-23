@@ -1,0 +1,170 @@
+<main class="about-page">
+	<!-- Hero -->
+	<section class="about-hero" aria-labelledby="about-hero-title">
+		<div class="about-hero__inner">
+			<p class="eyebrow">Escuela Bíblica Morando en Sion</p>
+			<h1 id="about-hero-title">Conoce quiénes somos y hacia dónde vamos</h1>
+			<p class="about-hero__lede">
+				EEBMS es un instituto joven con un propósito claro: formar creyentes en la Palabra de Dios,
+				fortalecer la comunidad y preparar servidores con excelencia. Estamos dando nuestros primeros
+				pasos, pero con la convicción de que lo que comenzamos, lo terminamos.
+			</p>
+			<p class="about-hero__note">
+				“Morando en Sion” expresa nuestro deseo de permanecer en la presencia de Dios, fundamentados
+				en Su Palabra y comprometidos con Su pueblo.
+			</p>
+		</div>
+	</section>
+
+	<div class="about-page__body">
+		<!-- Historia -->
+		<section class="about-section" id="historia" aria-labelledby="historia-title">
+			<div class="about-section__header">
+				<p class="eyebrow">Nuestra historia</p>
+				<h2 id="historia-title">Un instituto que recién comienza</h2>
+				<p class="about-section__intro">
+					No tenemos décadas de trayectoria todavía, pero sí una historia viva en construcción:
+					la de una comunidad que decidió levantar una escuela bíblica con fe, disciplina y servicio.
+				</p>
+			</div>
+
+			<ol class="timeline">
+				@for (item of timeline; track item.year) {
+					<li class="timeline__item">
+						<div class="timeline__marker" aria-hidden="true"></div>
+						<div class="timeline__content">
+							<span class="timeline__year">{{ item.year }}</span>
+							<h3>{{ item.title }}</h3>
+							<p>{{ item.description }}</p>
+						</div>
+					</li>
+				}
+			</ol>
+		</section>
+
+		<!-- ¿Qué creemos? -->
+		<section class="about-section" id="que-creemos" aria-labelledby="creemos-title">
+			<div class="about-section__header">
+				<p class="eyebrow">¿Qué creemos?</p>
+				<h2 id="creemos-title">Nuestros fundamentos de fe</h2>
+				<p class="about-section__intro">
+					Estos pilares orientan nuestra enseñanza y nuestra vida como comunidad. No reemplazan
+					la misión ni la visión, sino que expresan la base doctrinal sobre la cual edificamos.
+				</p>
+			</div>
+
+			<div class="beliefs-grid">
+				@for (belief of beliefs; track belief.title) {
+					<article class="belief-card">
+						<h3>{{ belief.title }}</h3>
+						<p>{{ belief.description }}</p>
+					</article>
+				}
+			</div>
+		</section>
+
+		<!-- ¿Cómo servimos? -->
+		<section class="about-section" id="como-servimos" aria-labelledby="servimos-title">
+			<div class="about-section__header">
+				<p class="eyebrow">¿Cómo servimos?</p>
+				<h2 id="servimos-title">Formación con propósito y excelencia</h2>
+			</div>
+
+			<div class="serve-layout">
+				<article class="serve-card">
+					<h3>Metodología formativa</h3>
+					<ul class="serve-list">
+						<li>Estudio bíblico sistemático y contextualizado</li>
+						<li>Enseñanza clara, aplicable y centrada en Cristo</li>
+						<li>Discipulado en comunidad y acompañamiento pastoral</li>
+						<li>Preparación práctica para el servicio en la iglesia local</li>
+					</ul>
+				</article>
+
+				<div class="values-block">
+					<h3>Valores que nos guían</h3>
+					<div class="values-grid">
+						@for (value of values; track value.title) {
+							<article class="value-card">
+								<h4>{{ value.title }}</h4>
+								<p>{{ value.description }}</p>
+							</article>
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Organigrama y equipo -->
+		<section class="about-section" id="organigrama" aria-labelledby="org-title">
+			<div class="about-section__header">
+				<p class="eyebrow">Estructura y liderazgo</p>
+				<h2 id="org-title">Cómo nos organizamos para servir</h2>
+				<p class="about-section__intro">
+					Como instituto en sus primeros años, nuestra estructura es sencilla y flexible, enfocada
+					en la formación de calidad y el servicio a la comunidad.
+				</p>
+			</div>
+
+			<div class="org-chart" role="list" aria-label="Organigrama institucional">
+				<div class="org-chart__root" role="listitem">
+					<div class="org-chart__node org-chart__node--primary">
+						<span class="org-chart__label">EEBMS</span>
+						<span class="org-chart__sublabel">Escuela Bíblica Morando en Sion</span>
+					</div>
+				</div>
+				<div class="org-chart__connector" aria-hidden="true"></div>
+				<div class="org-chart__branches">
+					@for (role of orgRoles; track role.title) {
+						<article class="org-chart__branch" role="listitem">
+							<div class="org-chart__node">
+								<h3>{{ role.title }}</h3>
+								<p class="org-chart__name">{{ role.name }}</p>
+								<p class="org-chart__desc">{{ role.description }}</p>
+							</div>
+						</article>
+					}
+				</div>
+			</div>
+
+			<div class="team-section">
+				<h3 class="team-section__title">Las personas detrás de la formación</h3>
+				<div class="team-grid">
+					@for (member of team; track member.name) {
+						<article class="team-card">
+							<div class="team-card__avatar" aria-hidden="true">
+								<span>{{ member.name.charAt(0) }}</span>
+							</div>
+							<h4>{{ member.name }}</h4>
+							<p class="team-card__role">{{ member.role }}</p>
+							<p class="team-card__focus">{{ member.focus }}</p>
+						</article>
+					}
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="about-cta" aria-labelledby="cta-title">
+			<div class="about-cta__card">
+				<div class="about-cta__glow" aria-hidden="true"></div>
+				<div class="about-cta__content">
+					<p class="eyebrow">Siguiente paso</p>
+					<h2 id="cta-title">¿Listo para formar parte de esta historia?</h2>
+					<p>
+						Estamos construyendo algo nuevo con fe y dedicación. Conoce nuestros programas o
+						escríbenos si deseas más información sobre inscripciones y actividades.
+					</p>
+					<div class="about-cta__actions">
+						<a class="about-cta__button about-cta__button--primary" routerLink="/programas">
+							Explorar programas
+						</a>
+						<a class="about-cta__button about-cta__button--secondary" routerLink="/" fragment="contacto">
+							Contáctanos
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</main>
