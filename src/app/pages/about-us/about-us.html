@@ -94,7 +94,7 @@
 			</div>
 		</section>
 
-		<!-- Organigrama y equipo -->
+		<!-- Estructura y liderazgo -->
 		<section class="about-section" id="organigrama" aria-labelledby="org-title">
 			<div class="about-section__header">
 				<p class="eyebrow">Estructura y liderazgo</p>
@@ -105,41 +105,20 @@
 				</p>
 			</div>
 
-			<div class="org-chart" role="list" aria-label="Organigrama institucional">
-				<div class="org-chart__root" role="listitem">
-					<div class="org-chart__node org-chart__node--primary">
-						<span class="org-chart__label">EEBMS</span>
-						<span class="org-chart__sublabel">Escuela Bíblica Morando en Sion</span>
-					</div>
-				</div>
-				<div class="org-chart__connector" aria-hidden="true"></div>
-				<div class="org-chart__branches">
-					@for (role of orgRoles; track role.title) {
-						<article class="org-chart__branch" role="listitem">
-							<div class="org-chart__node">
-								<h3>{{ role.title }}</h3>
-								<p class="org-chart__name">{{ role.name }}</p>
-								<p class="org-chart__desc">{{ role.description }}</p>
-							</div>
-						</article>
-					}
-				</div>
-			</div>
-
-			<div class="team-section">
-				<h3 class="team-section__title">Las personas detrás de la formación</h3>
-				<div class="team-grid">
-					@for (member of team; track member.name) {
-						<article class="team-card">
-							<div class="team-card__avatar" aria-hidden="true">
-								<span>{{ member.name.charAt(0) }}</span>
-							</div>
-							<h4>{{ member.name }}</h4>
-							<p class="team-card__role">{{ member.role }}</p>
-							<p class="team-card__focus">{{ member.focus }}</p>
-						</article>
-					}
-				</div>
+			<div class="leadership-grid" role="list" aria-label="Equipo de liderazgo">
+				@for (member of leadershipMembers; track $index) {
+					<article class="leadership-card" role="listitem">
+						<div class="leadership-card__photo">
+							@if (member.photoUrl) {
+								<img [src]="member.photoUrl" [alt]="member.photoAlt || member.name" loading="lazy" />
+							} @else {
+								<span aria-hidden="true">{{ member.name.charAt(0) }}</span>
+							}
+						</div>
+						<h3>{{ member.name }}</h3>
+						<p>{{ member.role }}</p>
+					</article>
+				}
 			</div>
 		</section>
 

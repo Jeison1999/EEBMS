@@ -1,33 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
-interface TimelineItem {
-	readonly year: string;
-	readonly title: string;
-	readonly description: string;
-}
-
-interface BeliefItem {
-	readonly title: string;
-	readonly description: string;
-}
-
-interface ValueItem {
-	readonly title: string;
-	readonly description: string;
-}
-
-interface OrgRole {
-	readonly title: string;
-	readonly name: string;
-	readonly description: string;
-}
-
-interface TeamMember {
-	readonly name: string;
-	readonly role: string;
-	readonly focus: string;
-}
+import type { BeliefItem, LeadershipMemberDto, TimelineItem, ValueItem } from './about-us.models';
 
 @Component({
 	selector: 'app-about-us',
@@ -110,39 +83,70 @@ export class AboutUs {
 		},
 	];
 
-	public readonly orgRoles: readonly OrgRole[] = [
+	public readonly leadershipMembers: readonly LeadershipMemberDto[] = [
 		{
-			title: 'Dirección general',
-			name: 'Por definir',
-			description: 'Coordina la visión institucional, el desarrollo académico y el servicio a la comunidad.',
+			name: 'Doris de Rios',
+			role: 'Directora',
 		},
 		{
-			title: 'Docencia',
-			name: 'Equipo docente',
-			description: 'Imparte la formación bíblica y teológica con rigor, claridad y corazón pastoral.',
+			name: 'Pedro Rios',
+			role: 'Pastor Presidente',
 		},
 		{
-			title: 'Administración',
-			name: 'Por definir',
-			description: 'Apoya la organización de programas, inscripciones, comunicación y logística.',
-		},
-	];
-
-	public readonly team: readonly TeamMember[] = [
-		{
-			name: 'Equipo fundador',
-			role: 'Liderazgo institucional',
-			focus: 'Guía los primeros pasos de EEBMS con visión, oración y servicio a la iglesia local.',
+			name: 'Anyela Ortega',
+			role: 'Asistente Administrativo',
 		},
 		{
-			name: 'Docentes',
-			role: 'Formación bíblica',
-			focus: 'Enseñan la Palabra con pasión por la verdad y el crecimiento espiritual de cada estudiante.',
+			name: 'Yohandry Martinez',
+			role: 'Coordinador Técnico',
 		},
 		{
-			name: 'Voluntarios',
-			role: 'Apoyo comunitario',
-			focus: 'Acompañan actividades, logística y el ambiente de comunidad que caracteriza a la escuela.',
+			name: 'Isaac Jimenez',
+			role: 'Auxiliar Técnico',
+		},
+		{
+			name: 'Diana Dimuro',
+			role: 'Coordinador de Finanzas',
+		},
+		{
+			name: 'Mirna Villalba',
+			role: 'Coordinador General',
+		},
+		{
+			name: 'Saray Obregon',
+			role: 'Coord. Académico Teología',
+		},
+		{
+			name: 'Julieth Yejas',
+			role: 'Coord. Discipulado Básico',
+		},
+		{
+			name: 'Melissa Julio',
+			role: 'Coord. Liderazgo',
+		},
+		{
+			name: 'Ma Camila Echavarria',
+			role: 'Coord. Discipulado Intensivo',
+		},
+		{
+			name: 'Andres Sevilla',
+			role: 'Coordinador Teología Virtual',
+		},
+		{
+			name: 'Roberto Charris',
+			role: 'Monitor Teología Presencial',
+		},
+		{
+			name: 'Maestros',
+			role: 'Equipo docente presencial',
+		},
+		{
+			name: 'Maestros',
+			role: 'Equipo docente discipulado',
+		},
+		{
+			name: 'Maestros',
+			role: 'Equipo docente liderazgo',
 		},
 	];
 }
