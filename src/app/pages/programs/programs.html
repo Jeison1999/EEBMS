@@ -1,0 +1,108 @@
+<main class="programs-page">
+	<!-- Hero -->
+	<section
+		class="programs-hero"
+		[class.programs-hero--fallback]="!hasHeroImage()"
+		aria-labelledby="programs-hero-title"
+	>
+		<div class="programs-hero__media" aria-hidden="true">
+			<img
+				class="programs-hero__image"
+				[src]="heroImageSrc"
+				alt=""
+				(error)="onHeroImageError()"
+			/>
+			<div class="programs-hero__veil"></div>
+		</div>
+
+		<div class="programs-hero__inner">
+			<p class="eyebrow">Escuela Bíblica Morando en Sion</p>
+			<h1 id="programs-hero-title">Programas de formación</h1>
+			<p class="programs-hero__lede">
+				Un camino ordenado para crecer en la fe, servir con excelencia y profundizar en la
+				Palabra de Dios.
+			</p>
+		</div>
+	</section>
+
+	<div class="programs-page__body">
+		<!-- Camino formativo -->
+		<section class="programs-section" aria-labelledby="path-title">
+			<div class="programs-section__header">
+				<p class="eyebrow">Camino formativo</p>
+				<h2 id="path-title">Cuatro etapas para crecer y servir</h2>
+				<p class="programs-section__intro">
+					Desde los primeros pasos en la fe hasta la formación teológica y el liderazgo,
+					cada programa tiene un propósito claro dentro del crecimiento del creyente.
+				</p>
+			</div>
+
+			<nav class="programs-path" aria-label="Resumen de programas">
+				@for (program of programs; track program.id) {
+					<a class="programs-path__item" [href]="'#' + program.id">
+						<span class="programs-path__step">{{ program.step }}</span>
+						<span class="programs-path__title">{{ program.title }}</span>
+					</a>
+				}
+			</nav>
+		</section>
+
+		<!-- Programas -->
+		@for (program of programs; track program.id) {
+			<section
+				class="program-block"
+				[id]="program.id"
+				[attr.aria-labelledby]="program.id + '-title'"
+			>
+				<div class="program-block__header">
+					<p class="program-block__step">Etapa {{ program.step }}</p>
+					<h2 [id]="program.id + '-title'">{{ program.title }}</h2>
+					<p class="program-block__summary">{{ program.summary }}</p>
+				</div>
+
+				<div class="program-block__body">
+					<div class="program-block__copy">
+						<p>{{ program.description }}</p>
+
+						<div class="program-block__purpose">
+							<span class="program-block__purpose-label">Finalidad</span>
+							<p>{{ program.purpose }}</p>
+						</div>
+					</div>
+
+					<dl class="program-block__meta">
+						@for (item of program.meta; track item.label) {
+							<div class="program-block__meta-item">
+								<dt>{{ item.label }}</dt>
+								<dd>{{ item.value }}</dd>
+							</div>
+						}
+					</dl>
+				</div>
+			</section>
+		}
+
+		<!-- CTA -->
+		<section class="programs-cta" aria-labelledby="programs-cta-title">
+			<div class="programs-cta__card">
+				<div class="programs-cta__glow" aria-hidden="true"></div>
+				<div class="programs-cta__content">
+					<p class="eyebrow">Siguiente paso</p>
+					<h2 id="programs-cta-title">¿Listo para comenzar tu formación?</h2>
+					<p>
+						Si deseas más información sobre inscripciones, horarios o el programa
+						adecuado para ti, contáctanos. Estamos aquí para acompañarte.
+					</p>
+					<div class="programs-cta__actions">
+						<a class="programs-cta__button programs-cta__button--primary" routerLink="/" fragment="contacto">
+							Contáctanos
+						</a>
+						<a class="programs-cta__button programs-cta__button--secondary" routerLink="/acerca-de-nosotros">
+							Conócenos
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</main>

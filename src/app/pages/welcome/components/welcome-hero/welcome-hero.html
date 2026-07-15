@@ -1,8 +1,23 @@
-<section class="hero" id="inicio">
-	<div class="hero__inner">
-		<div class="hero__content">
+<section
+	class="hero"
+	[class.hero--fallback]="!hasHeroImage()"
+	id="inicio"
+	aria-labelledby="hero-title"
+>
+	<div class="hero__media" aria-hidden="true">
+		<img
+			class="hero__image"
+			[src]="heroImageSrc"
+			alt=""
+			(error)="onHeroImageError()"
+		/>
+		<div class="hero__veil"></div>
+	</div>
+
+	<div class="hero__frame">
+		<div class="hero__inner">
 			<p class="eyebrow">Escuela Bíblica Morando en Sion</p>
-			<h1>" Lo que comenzamos lo terminamos "</h1>
+			<h1 id="hero-title">"Lo que comenzamos lo terminamos"</h1>
 			<p class="hero__lede">
 				Un espacio para crecer en la Palabra, fortalecer la comunidad y preparar a cada
 				estudiante para servir con excelencia.
@@ -11,11 +26,6 @@
 			<div class="hero__actions">
 				<a class="button button--primary" href="#programas">Ver programas</a>
 				<a class="button button--secondary" href="#contacto">Contáctanos</a>
-			</div>
-
-			<div class="hero__quote" aria-label="Frase motivacional">
-				<span>“Esfuérzate por presentarte a Dios aprobado, como obrero que no tiene de qué avergonzarse, que maneja bien la palabra de verdad.”</span>
-				<strong>2 Timoteo 2:15</strong>
 			</div>
 		</div>
 	</div>
