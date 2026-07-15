@@ -1,13 +1,26 @@
 <main class="about-page">
 	<!-- Hero -->
-	<section class="about-hero" aria-labelledby="about-hero-title">
+	<section
+		class="about-hero"
+		[class.about-hero--fallback]="!hasHeroImage()"
+		aria-labelledby="about-hero-title"
+	>
+		<div class="about-hero__media" aria-hidden="true">
+			<img
+				class="about-hero__image"
+				[src]="heroImageSrc"
+				alt=""
+				(error)="onHeroImageError()"
+			/>
+			<div class="about-hero__veil"></div>
+		</div>
+
 		<div class="about-hero__inner">
 			<p class="eyebrow">Escuela Bíblica Morando en Sion</p>
 			<h1 id="about-hero-title">Conoce quiénes somos y hacia dónde vamos</h1>
 			<p class="about-hero__lede">
 				EEBMS es un instituto joven con un propósito claro: formar creyentes en la Palabra de Dios,
-				fortalecer la comunidad y preparar servidores con excelencia. Estamos dando nuestros primeros
-				pasos, pero con la convicción de que lo que comenzamos, lo terminamos.
+				fortalecer la comunidad y preparar servidores con excelencia.
 			</p>
 			<p class="about-hero__note">
 				“Morando en Sion” expresa nuestro deseo de permanecer en la presencia de Dios, fundamentados
@@ -105,20 +118,66 @@
 				</p>
 			</div>
 
-			<div class="leadership-grid" role="list" aria-label="Equipo de liderazgo">
-				@for (member of leadershipMembers; track $index) {
-					<article class="leadership-card" role="listitem">
-						<div class="leadership-card__photo">
-							@if (member.photoUrl) {
-								<img [src]="member.photoUrl" [alt]="member.photoAlt || member.name" loading="lazy" />
-							} @else {
-								<span aria-hidden="true">{{ member.name.charAt(0) }}</span>
-							}
-						</div>
-						<h3>{{ member.name }}</h3>
-						<p>{{ member.role }}</p>
-					</article>
-				}
+			<div class="leadership-carousel">
+				<button
+					type="button"
+					class="leadership-carousel__nav leadership-carousel__nav--prev"
+					(click)="scrollLeadership('prev')"
+					[disabled]="!canScrollPrev()"
+					aria-label="Ver miembros anteriores"
+				>
+					<svg viewBox="0 0 16 16" aria-hidden="true">
+						<path
+							fill="currentColor"
+							d="M10.354 3.646a.5.5 0 0 1 0 .708L6.707 8l3.647 3.646a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"
+						/>
+					</svg>
+				</button>
+
+				<div class="leadership-carousel__viewport">
+					<div
+						#leadershipTrack
+						class="leadership-grid"
+						role="list"
+						aria-label="Equipo de liderazgo"
+						(scroll)="onLeadershipScroll()"
+					>
+						@for (member of leadershipMembers; track $index) {
+							<article class="leadership-card" role="listitem">
+								<div class="leadership-card__photo">
+									@if (hasPhoto(member)) {
+										<img
+											[src]="member.photoUrl"
+											[alt]="member.photoAlt || member.name"
+											[style.object-position]="member.photoObjectPosition || '50% 20%'"
+											loading="lazy"
+											(error)="onPhotoError(member.photoUrl!)"
+										/>
+									} @else {
+										<span aria-hidden="true">{{ member.name.charAt(0) }}</span>
+									}
+								</div>
+								<h3>{{ member.name }}</h3>
+								<p>{{ member.role }}</p>
+							</article>
+						}
+					</div>
+				</div>
+
+				<button
+					type="button"
+					class="leadership-carousel__nav leadership-carousel__nav--next"
+					(click)="scrollLeadership('next')"
+					[disabled]="!canScrollNext()"
+					aria-label="Ver miembros siguientes"
+				>
+					<svg viewBox="0 0 16 16" aria-hidden="true">
+						<path
+							fill="currentColor"
+							d="M5.646 3.646a.5.5 0 0 0 0 .708L9.293 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0z"
+						/>
+					</svg>
+				</button>
 			</div>
 		</section>
 

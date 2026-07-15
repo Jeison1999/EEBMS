@@ -19,5 +19,7 @@ export interface LeadershipMemberDto {
 	readonly role: string;
 	readonly photoUrl?: string;
 	readonly photoAlt?: string;
+	/** Ajuste de encuadre del círculo, ej. "30% 25%" cuando la cara queda descentrada. */
+	readonly photoObjectPosition?: string;
 	readonly description?: string;
 }
