@@ -23,3 +23,11 @@ export interface LeadershipMemberDto {
 	readonly photoObjectPosition?: string;
 	readonly description?: string;
 }
+
+export interface LeadershipGroup {
+	readonly id: string;
+	readonly title: string;
+	readonly subtitle: string;
+	readonly featured?: boolean;
+	readonly members: readonly LeadershipMemberDto[];
+}

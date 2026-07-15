@@ -107,6 +107,53 @@
 			</div>
 		</section>
 
+		<!-- Plataforma de aprendizaje -->
+		<section class="about-section" id="plataforma" aria-labelledby="platform-title">
+			<div class="platform">
+				<div class="platform__collage" aria-hidden="true">
+					<figure class="platform__shot platform__shot--back">
+						@if (!platformImageFailed().has('back')) {
+							<img
+								[src]="platformImages.back"
+								alt=""
+								loading="lazy"
+								(error)="onPlatformImageError('back')"
+							/>
+						} @else {
+							<div class="platform__fallback"></div>
+						}
+					</figure>
+					<figure class="platform__shot platform__shot--front">
+						@if (!platformImageFailed().has('front')) {
+							<img
+								[src]="platformImages.front"
+								alt=""
+								loading="lazy"
+								(error)="onPlatformImageError('front')"
+							/>
+						} @else {
+							<div class="platform__fallback"></div>
+						}
+					</figure>
+				</div>
+
+				<div class="platform__copy">
+					<p class="eyebrow">Plataforma de aprendizaje</p>
+					<h2 id="platform-title">Tu aula virtual para crecer en la Palabra</h2>
+					<p class="platform__lede">
+						Contamos con un espacio digital propio donde estudiantes y docentes se encuentran
+						para estudiar, compartir recursos y avanzar en cada programa con orden y claridad.
+					</p>
+					<ul class="platform__features">
+						<li>Acceso a materiales, lecciones y recursos desde cualquier lugar</li>
+						<li>Seguimiento de avances y actividades por cada etapa formativa</li>
+						<li>Comunicación ágil entre estudiantes, maestros y coordinación</li>
+						<li>Modalidad que acompaña tanto la formación presencial como virtual</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
 		<!-- Estructura y liderazgo -->
 		<section class="about-section" id="organigrama" aria-labelledby="org-title">
 			<div class="about-section__header">
@@ -118,66 +165,52 @@
 				</p>
 			</div>
 
-			<div class="leadership-carousel">
-				<button
-					type="button"
-					class="leadership-carousel__nav leadership-carousel__nav--prev"
-					(click)="scrollLeadership('prev')"
-					[disabled]="!canScrollPrev()"
-					aria-label="Ver miembros anteriores"
-				>
-					<svg viewBox="0 0 16 16" aria-hidden="true">
-						<path
-							fill="currentColor"
-							d="M10.354 3.646a.5.5 0 0 1 0 .708L6.707 8l3.647 3.646a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"
-						/>
-					</svg>
-				</button>
-
-				<div class="leadership-carousel__viewport">
-					<div
-						#leadershipTrack
-						class="leadership-grid"
-						role="list"
-						aria-label="Equipo de liderazgo"
-						(scroll)="onLeadershipScroll()"
+			<div class="leadership">
+				@for (group of leadershipGroups; track group.id) {
+					<section
+						class="leadership-group"
+						[class.leadership-group--featured]="group.featured"
+						[attr.aria-labelledby]="group.id + '-title'"
 					>
-						@for (member of leadershipMembers; track $index) {
-							<article class="leadership-card" role="listitem">
-								<div class="leadership-card__photo">
-									@if (hasPhoto(member)) {
-										<img
-											[src]="member.photoUrl"
-											[alt]="member.photoAlt || member.name"
-											[style.object-position]="member.photoObjectPosition || '50% 20%'"
-											loading="lazy"
-											(error)="onPhotoError(member.photoUrl!)"
-										/>
-									} @else {
-										<span aria-hidden="true">{{ member.name.charAt(0) }}</span>
-									}
-								</div>
-								<h3>{{ member.name }}</h3>
-								<p>{{ member.role }}</p>
-							</article>
-						}
-					</div>
-				</div>
+						<header class="leadership-group__header">
+							<p class="leadership-group__label">{{ group.title }}</p>
+							<h3 [id]="group.id + '-title'">{{ group.subtitle }}</h3>
+						</header>
 
-				<button
-					type="button"
-					class="leadership-carousel__nav leadership-carousel__nav--next"
-					(click)="scrollLeadership('next')"
-					[disabled]="!canScrollNext()"
-					aria-label="Ver miembros siguientes"
-				>
-					<svg viewBox="0 0 16 16" aria-hidden="true">
-						<path
-							fill="currentColor"
-							d="M5.646 3.646a.5.5 0 0 0 0 .708L9.293 8l-3.647 3.646a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708 0z"
-						/>
-					</svg>
-				</button>
+						<div
+							class="leadership-group__grid"
+							role="list"
+							[attr.aria-label]="group.title"
+						>
+							@for (member of group.members; track member.name; let i = $index) {
+								<article
+									class="leadership-card"
+									[class.leadership-card--featured]="group.featured"
+									role="listitem"
+									[style.--card-delay]="i * 60 + 'ms'"
+								>
+									<div class="leadership-card__photo">
+										@if (hasPhoto(member)) {
+											<img
+												[src]="member.photoUrl"
+												[alt]="member.photoAlt || member.name"
+												[style.object-position]="member.photoObjectPosition || '50% 20%'"
+												loading="lazy"
+												(error)="onPhotoError(member.photoUrl!)"
+											/>
+										} @else {
+											<span aria-hidden="true">{{ member.name.charAt(0) }}</span>
+										}
+									</div>
+									<div class="leadership-card__copy">
+										<h4>{{ member.name }}</h4>
+										<p>{{ member.role }}</p>
+									</div>
+								</article>
+							}
+						</div>
+					</section>
+				}
 			</div>
 		</section>
 

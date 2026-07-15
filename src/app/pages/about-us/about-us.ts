@@ -1,15 +1,12 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	DestroyRef,
-	ElementRef,
-	afterNextRender,
-	inject,
-	signal,
-	viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import type { BeliefItem, LeadershipMemberDto, TimelineItem, ValueItem } from './about-us.models';
+import type {
+	BeliefItem,
+	LeadershipGroup,
+	LeadershipMemberDto,
+	TimelineItem,
+	ValueItem,
+} from './about-us.models';
 
 const CLOUDINARY_CLOUD = 'dsm6diilz';
 
@@ -28,130 +25,17 @@ const CLOUDINARY_PHOTO = (publicId: string, version = 'v1784085276'): string =>
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutUs {
-	private readonly destroyRef = inject(DestroyRef);
-	private readonly leadershipTrack = viewChild<ElementRef<HTMLElement>>('leadershipTrack');
-
-	readonly canScrollPrev = signal(false);
-	readonly canScrollNext = signal(false);
 	readonly photoErrors = signal<ReadonlySet<string>>(new Set());
 	readonly heroImageFailed = signal(false);
+	readonly platformImageFailed = signal<ReadonlySet<'back' | 'front'>>(new Set());
 
 	readonly heroImageSrc = 'assets/images/equipo.jpg';
 
-	hasHeroImage(): boolean {
-		return !this.heroImageFailed();
-	}
+	readonly platformImages = {
+		back: 'https://res.cloudinary.com/dsm6diilz/image/upload/v1784139019/Captura_de_pantalla_2026-07-15_130842_nddh4f.png',
+		front: 'https://res.cloudinary.com/dsm6diilz/image/upload/v1784139018/Captura_de_pantalla_2026-07-15_130907_vo1fny.png',
+	} as const;
 
-	onHeroImageError(): void {
-		this.heroImageFailed.set(true);
-	}
-
-	constructor() {
-		afterNextRender(() => {
-			const track = this.leadershipTrack()?.nativeElement;
-			if (!track) {
-				return;
-			}
-
-			this.updateScrollState();
-
-			const resizeObserver = new ResizeObserver(() => this.updateScrollState());
-			resizeObserver.observe(track);
-
-			this.destroyRef.onDestroy(() => {
-				resizeObserver.disconnect();
-			});
-		});
-	}
-
-	onLeadershipScroll(): void {
-		this.updateScrollState();
-	}
-
-	onPhotoError(photoUrl: string): void {
-		this.photoErrors.update((current) => new Set([...current, photoUrl]));
-	}
-
-	hasPhoto(member: LeadershipMemberDto): boolean {
-		return !!member.photoUrl && !this.photoErrors().has(member.photoUrl);
-	}
-
-	scrollLeadership(direction: 'prev' | 'next'): void {
-		const track = this.leadershipTrack()?.nativeElement;
-		if (!track) {
-			return;
-		}
-
-		const cards = [...track.querySelectorAll<HTMLElement>('.leadership-card')];
-		if (!cards.length) {
-			return;
-		}
-
-		const currentIndex = this.getVisibleCardIndex(track, cards);
-		const nextIndex =
-			direction === 'next'
-				? Math.min(currentIndex + 1, cards.length - 1)
-				: Math.max(currentIndex - 1, 0);
-
-		if (nextIndex === currentIndex) {
-			return;
-		}
-
-		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-		cards[nextIndex].scrollIntoView({
-			behavior: prefersReducedMotion ? 'auto' : 'smooth',
-			inline: 'start',
-			block: 'nearest',
-		});
-
-		this.updateScrollState();
-
-		if (!prefersReducedMotion) {
-			track.addEventListener('scrollend', () => this.updateScrollState(), { once: true });
-		}
-	}
-
-	private getVisibleCardIndex(
-		track: HTMLElement,
-		cards: readonly HTMLElement[],
-	): number {
-		const scrollLeft = track.scrollLeft;
-		let index = 0;
-
-		for (let i = 0; i < cards.length; i++) {
-			if (cards[i].offsetLeft <= scrollLeft + 8) {
-				index = i;
-			}
-		}
-
-		return index;
-	}
-
-	private updateScrollState(): void {
-		const track = this.leadershipTrack()?.nativeElement;
-		if (!track) {
-			return;
-		}
-
-		const cards = track.querySelectorAll<HTMLElement>('.leadership-card');
-		const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-		const tolerance = 4;
-		const hasOverflow = maxScroll > tolerance;
-
-		if (!hasOverflow || !cards.length) {
-			this.canScrollPrev.set(false);
-			this.canScrollNext.set(false);
-			return;
-		}
-
-		const currentIndex = this.getVisibleCardIndex(track, [...cards]);
-
-		this.canScrollPrev.set(currentIndex > 0 || track.scrollLeft > tolerance);
-		this.canScrollNext.set(
-			currentIndex < cards.length - 1 || track.scrollLeft < maxScroll - tolerance,
-		);
-	}
 	public readonly timeline: readonly TimelineItem[] = [
 		{
 			year: '2025',
@@ -225,72 +109,114 @@ export class AboutUs {
 		},
 	];
 
-	public readonly leadershipMembers: readonly LeadershipMemberDto[] = [
+	public readonly leadershipGroups: readonly LeadershipGroup[] = [
 		{
-			name: 'Doris de Rios',
-			role: 'Directora',
-			photoUrl: CLOUDINARY_PHOTO('Dori_wiyab4'),
+			id: 'direccion',
+			title: 'Dirección',
+			subtitle: 'Quienes guían la visión y el corazón institucional de EEBMS.',
+			featured: true,
+			members: [
+				{
+					name: 'Doris de Rios',
+					role: 'Directora',
+					photoUrl: CLOUDINARY_PHOTO('Dori_wiyab4'),
+				},
+				{
+					name: 'Pedro Rios',
+					role: 'Pastor Presidente',
+					photoUrl: CLOUDINARY_PHOTO('Pedro_razdtu'),
+				},
+			],
 		},
 		{
-			name: 'Pedro Rios',
-			role: 'Pastor Presidente',
-			photoUrl: CLOUDINARY_PHOTO('Pedro_razdtu'),
+			id: 'administracion',
+			title: 'Administración y operación',
+			subtitle: 'El equipo que sostiene la gestión diaria y el soporte técnico.',
+			members: [
+				{
+					name: 'Anyela Ortega',
+					role: 'Asistente Administrativo',
+					photoUrl: CLOUDINARY_PHOTO('angela_y6f5gj'),
+				},
+				{
+					name: 'Diana Dimuro',
+					role: 'Coordinador de Finanzas',
+					photoUrl: CLOUDINARY_PHOTO('diana_czs3ul'),
+				},
+				{
+					name: 'Mirna Villalba',
+					role: 'Coordinador General',
+					photoUrl: CLOUDINARY_PHOTO('mirna_pptlb8'),
+				},
+				{
+					name: 'Yohandry Martinez',
+					role: 'Coordinador Técnico',
+					photoUrl: CLOUDINARY_PHOTO('Yohandry_wqkczk'),
+				},
+				{
+					name: 'Isaac Jimenez',
+					role: 'Auxiliar Técnico',
+					photoUrl: CLOUDINARY_PHOTO('Isaac_ncb7rb'),
+				},
+			],
 		},
 		{
-			name: 'Anyela Ortega',
-			role: 'Asistente Administrativo',
-			photoUrl: CLOUDINARY_PHOTO('angela_y6f5gj'),
-		},
-		{
-			name: 'Yohandry Martinez',
-			role: 'Coordinador Técnico',
-			photoUrl: CLOUDINARY_PHOTO('Yohandry_wqkczk'),
-		},
-		{
-			name: 'Isaac Jimenez',
-			role: 'Auxiliar Técnico',
-			photoUrl: CLOUDINARY_PHOTO('Isaac_ncb7rb'),
-		},
-		{
-			name: 'Diana Dimuro',
-			role: 'Coordinador de Finanzas',
-			photoUrl: CLOUDINARY_PHOTO('diana_czs3ul'),
-		},
-		{
-			name: 'Mirna Villalba',
-			role: 'Coordinador General',
-			photoUrl: CLOUDINARY_PHOTO('mirna_pptlb8'),
-		},
-		{
-			name: 'Saray Obregon',
-			role: 'Coord. Académico Teología',
-			photoUrl: CLOUDINARY_PHOTO('saray2_p5acx0'),
-			photoObjectPosition: '28% 22%',
-		},
-		{
-			name: 'Julieth Yejas',
-			role: 'Coord. Discipulado Básico',
-			photoUrl: CLOUDINARY_PHOTO('yuliet_vonovc'),
-		},
-		{
-			name: 'Melissa Julio',
-			role: 'Coord. Liderazgo',
-			photoUrl: CLOUDINARY_PHOTO('melissa_htpqvn'),
-		},
-		{
-			name: 'Maria Camila ',
-			role: 'Coord. Discipulado Intensivo',
-			photoUrl: CLOUDINARY_PHOTO('maria_camila_cpdpor'),
-		},
-		{
-			name: 'Andres Sevilla',
-			role: 'Coordinador Teología Virtual',
-			photoUrl: CLOUDINARY_PHOTO('andres_ibkli4'),
-		},
-		{
-			name: 'Roberto Charris',
-			role: 'Monitor Teología Presencial',
-			photoUrl: CLOUDINARY_PHOTO('Roberto_j4n8qd'),
+			id: 'formacion',
+			title: 'Formación y coordinación académica',
+			subtitle: 'Quienes acompañan cada programa y el crecimiento de los estudiantes.',
+			members: [
+				{
+					name: 'Saray Obregon',
+					role: 'Coord. Académico Teología',
+					photoUrl: CLOUDINARY_PHOTO('saray2_p5acx0'),
+					photoObjectPosition: '28% 22%',
+				},
+				{
+					name: 'Julieth Yejas',
+					role: 'Coord. Discipulado Básico',
+					photoUrl: CLOUDINARY_PHOTO('yuliet_vonovc'),
+				},
+				{
+					name: 'Melissa Julio',
+					role: 'Coord. Liderazgo',
+					photoUrl: CLOUDINARY_PHOTO('melissa_htpqvn'),
+				},
+				{
+					name: 'Maria Camila',
+					role: 'Coord. Discipulado Intensivo',
+					photoUrl: CLOUDINARY_PHOTO('maria_camila_cpdpor'),
+				},
+				{
+					name: 'Andres Sevilla',
+					role: 'Coordinador Teología Virtual',
+					photoUrl: CLOUDINARY_PHOTO('andres_ibkli4'),
+				},
+				{
+					name: 'Roberto Charris',
+					role: 'Monitor Teología Presencial',
+					photoUrl: CLOUDINARY_PHOTO('Roberto_j4n8qd'),
+				},
+			],
 		},
 	];
+
+	hasHeroImage(): boolean {
+		return !this.heroImageFailed();
+	}
+
+	onHeroImageError(): void {
+		this.heroImageFailed.set(true);
+	}
+
+	onPlatformImageError(slot: 'back' | 'front'): void {
+		this.platformImageFailed.update((current) => new Set([...current, slot]));
+	}
+
+	onPhotoError(photoUrl: string): void {
+		this.photoErrors.update((current) => new Set([...current, photoUrl]));
+	}
+
+	hasPhoto(member: LeadershipMemberDto): boolean {
+		return !!member.photoUrl && !this.photoErrors().has(member.photoUrl);
+	}
 }
