@@ -10,7 +10,7 @@
 .page-shell {
 	width: min(var(--layout-max), calc(100% - var(--layout-gutter) * 2));
 	margin: 0 auto;
-	padding: clamp(1rem, 3vw, 2rem) 0 clamp(3rem, 8vw, 5rem);
+	padding: 0 0 clamp(3rem, 8vw, 5rem);
 	padding-left: max(0px, env(safe-area-inset-left));
 	padding-right: max(0px, env(safe-area-inset-right));
 }
@@ -30,7 +30,7 @@
 @media (max-width: 480px) {
 	.page-shell {
 		width: min(var(--layout-max), calc(100% - 1rem));
-		padding-top: 0.75rem;
+		padding-top: 0;
 		padding-bottom: 2.5rem;
 	}
 }
